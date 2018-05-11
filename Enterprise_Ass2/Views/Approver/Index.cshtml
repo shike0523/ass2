@@ -1,0 +1,166 @@
+﻿@model IEnumerable<Enterprise_Ass2.Models.RulesVehicles.Rule>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Question)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Answer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.State)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Type)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Creator)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Question)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Answer)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.State)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Type)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Creator)
+                </td>
+                <td>
+                    <a asp-action="Approve" asp-route-id="@item.ID">Approve</a> |
+                    <a asp-action="Reject" asp-route-id="@item.ID">Reject</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<p>
+    @Html.ActionLink("EditorReport", "Index", new { EditorReport = true })
+</p>
+<p>
+    @Html.ActionLink("Rule Summary report", "Index", new { RuleReport = true })
+</p>
+
+
+@if (ViewBag.EditorReport == true)
+{
+
+    <table class="table">
+        <tr>
+            <th>Editor UserName</th>
+            <th>
+                Approved Rule Count
+            </th>
+            <th>Rejected Rule Count</th>
+            <th>Success Rate</th>
+        </tr>
+
+        @{
+            List<Enterprise_Ass2.Models.VehicleViewModels.EditorRuleReport> editorReport = ViewBag.EditorRuleReport;
+            @foreach (var item in editorReport)
+            {
+
+                <tr>
+                    <td>
+                        @item.EditorUserName
+                    </td>
+                    <td>
+                        @item.ApprovedRuleCount
+                    </td>
+                    <td>
+                        @item.RejectedRuleCount
+                    </td>
+                    <td>
+                        @item.SuccessRate
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+}
+
+@if (ViewBag.RuleReport == true)
+{
+    <p>aaa</p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Question)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Answer)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.State)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Type)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Creator)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+
+        @{
+            List<Enterprise_Ass2.Models.RulesVehicles.Rule> rules = ViewBag.RuleSummaryReport;
+            @foreach (var item in rules)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Question)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Answer)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.State)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Type)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Creator)
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+    <p>
+        Approved Rules:@ViewBag.ApprovedRules;
+    </p>
+    <p>
+        Rejected Rules:@ViewBag.RejectedRules;
+    </p>
+    <p>
+        Rejected Rate:@ViewBag.SuccessRate;
+    </p>
+
+}
